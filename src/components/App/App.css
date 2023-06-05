@@ -1,0 +1,17 @@
+@font-face {
+    font-family: 'Inter UI';
+    src: url('../../fonts/Inter-UI-Regular.otf');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+    }
+
+html,
+body {
+	margin: 0 auto;
+	padding: 0;
+	max-width: 1010px;
+	font-family: 'Inter UI';
+    padding: 19px 13px 19px 13px;
+}
+

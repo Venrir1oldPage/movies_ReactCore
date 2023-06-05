@@ -1,0 +1,102 @@
+.card {
+    box-shadow:0px 4px 12px rgba(0, 0, 0, 0.15);
+    display: flex;
+    margin-bottom: 34px;
+    width: 454px;
+    height: 281px ;
+}
+
+:where(.css-dev-only-do-not-override-w8mnev).ant-image, .ant-image-img .ant-image-mask-info {
+    width:183px;
+    height:281px
+}
+
+.movie__info {
+display: flex;
+flex-direction: column;
+width: 228px;
+margin-left: 20px;
+position: relative;
+}
+
+.movie__tite{
+    font-size: 20px;
+    line-height: 28px;
+    margin: 0;
+    margin-bottom:7px;
+    margin-top: 12px;
+    width:200px;
+}
+
+.movie__date {
+font-size: 12px;
+line-height: 22px;
+color: #827E7E;
+margin:0;
+margin-bottom: 7px;
+}
+
+.movie__description{
+    margin-top: 7px;
+    font-size: 12px;
+    line-height: 22px;
+    margin-bottom:0;
+}
+
+.movie__stars{
+    margin-top: auto;
+    margin-bottom:10px;
+}
+
+.movies__rate{
+font-size: 12px;
+line-height: 22px;
+width: 30px;
+height: 30px;
+border-radius: 50%;
+border: solid 2px #E9D100;
+justify-content: center;
+padding-top:1px;
+padding-left: 5px;
+position: absolute;
+right:0;
+}
+
+@media (max-width: 960px) { 
+    .card{
+    max-width: 500px;
+    margin-bottom: 20px;
+    display:flex;
+    height:245px;
+    }
+.movie__info{
+    width:317px;
+}
+    
+:where(.css-dev-only-do-not-override-w8mnev).ant-image, .ant-image-img .ant-image-mask {
+width: 60px;
+height: 91px;
+display: block;
+top:0;
+position:relative;
+margin-top: 6px;
+    }
+.movie__stars{
+    position: relative;
+    left: 30px;
+}
+    
+.movie__tite{
+    grid-area: title;
+    margin-top: 4px;
+}
+
+.movie__description{
+    grid-area: description;
+    column-span: 3;
+    align-self: start;
+    width: 367px;
+    position: relative;
+    right: 80px;
+}
+}

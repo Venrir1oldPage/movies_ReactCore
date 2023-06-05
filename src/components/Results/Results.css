@@ -1,0 +1,20 @@
+.movies_pagination{
+	max-width: 370px;
+	margin:0 auto;
+	margin-bottom: 15px;
+}
+
+.movies__loaderContainer{
+	height:617px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: lightgrey;
+	margin-top:19px;
+	margin-bottom: 19px;
+}
+
+.movies__alert{
+	margin-top:19px;
+	margin-bottom: 19px;
+}

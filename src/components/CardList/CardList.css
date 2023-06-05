@@ -1,0 +1,13 @@
+.cardlist {
+	padding-top:32px;
+	display:flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	padding-bottom:10px;
+}
+
+@media (max-width: 960px) { 
+	.cardlist {
+justify-content: center;
+	}
+} 
