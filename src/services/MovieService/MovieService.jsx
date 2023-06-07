@@ -55,8 +55,7 @@ export default class MovieService extends Component {
         overview:description,
         posterPath:imgPath,
         id:movieData.id,
-        vote:(movieData.vote_average/2),
-        rate:movieData.popularity.toFixed(1)
+        vote:(movieData.vote_average.toFixed(1)),
       }
       )
     }

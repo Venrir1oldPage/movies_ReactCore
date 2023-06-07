@@ -1,7 +1,7 @@
 import './App.css'
-import { Input , Tabs } from 'antd'
+import { Input , Tabs, Alert} from 'antd'
 import { Component } from 'react'
-//import { Offline, Online } from 'react-detect-offline'
+import { Offline } from 'react-detect-offline'
 import { debounce } from 'lodash'
 
 import Results from '../Results/Results'
@@ -10,6 +10,7 @@ import Results from '../Results/Results'
 export default class App extends Component {
   state={
     inputValue:'way',
+    error:false
   }
 
   onSentInput = (e) => {
@@ -19,8 +20,14 @@ export default class App extends Component {
     })
   }
 
+  componentDidCatch(){
+    this.setState({
+      error:true
+    })
+  }
+
   render() {
-    const {inputValue }=this.state
+    const {inputValue, error }=this.state
     const items = [
       {
         key: 1,
@@ -36,14 +43,12 @@ export default class App extends Component {
         children: [<div key='rated'>rated films</div>],
       },
     ]
-
+    if(error) return <Alert className='movies__alert' showIcon message='Что-то пошло совсем не так' type="error" />
 
     return (
       <div className="page">
-        {/* <Online> */}
+        <Offline>Кажется, у вас нет интернета. Проверьте сетевое соединение</Offline>
         <Tabs className='tabs' defaultActiveKey="1" items={items} centered />
-        {/* </Online> */}
-        {/* <Offline>Кажется, у вас нет интернета. Проверьте сетевое соединение</Offline> */}
       </div>
     )
   }
