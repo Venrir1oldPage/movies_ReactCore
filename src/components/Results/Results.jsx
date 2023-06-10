@@ -4,7 +4,6 @@ import { LoadingOutlined } from '@ant-design/icons'
 import PropTypes from 'prop-types'
 
 import CardList from '../CardList/CardList'
-import MovieService  from '../../services/MovieService/MovieService'
 
 import './Results.css'
 
@@ -19,12 +18,11 @@ export default class Results extends Component{
     currentPage:1,
   }
 
-  movieService = new MovieService()
 
   getData = (input, page) => {
     if(!this.state.moviesData) return
-    this.movieService.updateMovies(input, page).then((info)=> {
-      const totalPages = this.movieService.getTotalPages()
+    this.props.updateMovies(input, page).then((info)=> {
+      const totalPages = this.props.getTotalPages()
       this.setState({
         moviesData:info,
         loading:false,

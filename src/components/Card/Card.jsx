@@ -20,7 +20,7 @@ export default class Card extends Component {
     }
   }
   rating = (value) => {
-    console.log('ratiiing')
+    this.props.rateMovie(this.state.id, value)
     this.setState({
       rate:value
     })
@@ -34,8 +34,9 @@ export default class Card extends Component {
 
   render () {
     const {title, date, tags, overview, posterPath, vote, id, rate} = this.state
+    const {genres} = this.props
     let color=vote<3? '#E90000': vote <5?'#E97E00': vote<7?'#E9D100':'#66E900'
-  
+      
     return (
       <div className='card' key={id}>
         <Image className='movie__poster'
@@ -46,7 +47,7 @@ export default class Card extends Component {
           <h2 className='movie__tite'>{title}</h2>
           <Progress className='movies__rate' percent={vote*10}  size={33} type="circle" trailColor='#D9D9D9' format={() => `${vote}`} strokeColor={color}/>
           <p className='movie__date'>{date}</p>
-          <TagsList className='movie_tags' tagsInfo={tags}/> 
+          <TagsList className='movie_tags' tagsInfo={tags} genres={genres}/>  
           <p className='movie__description'>{overview}</p>
           <Rate className='movie__stars' allowHalf onChange={this.rating} value={rate} />
         </div>
