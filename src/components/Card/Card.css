@@ -6,9 +6,9 @@
     height: 281px ;
 }
 
-:where(.css-dev-only-do-not-override-w8mnev).ant-image, .ant-image-img .ant-image-mask-info {
-    width:183px;
-    height:281px !important
+.movie__poster{
+    height: 281px !important;
+width: 183px !important;
 }
 
 .movie__info {
@@ -70,15 +70,12 @@ right:0;
 .movie__info{
     width:317px;
 }
+.movie__poster{
+    height: 91px !important;
+    width: 60px  !important;
+}
     
-:where(.css-dev-only-do-not-override-w8mnev).ant-image, .ant-image-img .ant-image-mask {
-width: 60px;
-height: 91px;
-display: block;
-top:0;
-position:relative;
-margin-top: 6px;
-    }
+
 .movie__stars{
     position: relative;
     left: 30px;

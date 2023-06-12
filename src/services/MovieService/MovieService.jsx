@@ -41,7 +41,6 @@ export default class MovieService extends Component {
     let res = await fetch(link)
       .then(response => response.json())
       .then(response => {
-        console.log(response)
         this.totalRatePages=response.total_pages
         return response})
       .catch(err => console.error(err))
