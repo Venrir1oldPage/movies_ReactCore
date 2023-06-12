@@ -73,6 +73,8 @@ right:0;
 .movie__poster{
     height: 91px !important;
     width: 60px  !important;
+    margin-left:10px;
+    margin-top: 6px;
 }
     
 
