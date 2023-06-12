@@ -6,7 +6,7 @@ export default class MovieService extends Component {
 
   totalPages
   totalRatePages
-  //session = localStorage.getItem('MoviesSessionID')
+ 
   apiKey='a4a7b57541bec4d7d07a9582d811124b'
 
   baseUrl='https://api.themoviedb.org/3/'
@@ -41,6 +41,7 @@ export default class MovieService extends Component {
     let res = await fetch(link)
       .then(response => response.json())
       .then(response => {
+        console.log(response)
         this.totalRatePages=response.total_pages
         return response})
       .catch(err => console.error(err))
@@ -121,6 +122,7 @@ export default class MovieService extends Component {
         posterPath:imgPath,
         id:movieData.id,
         vote:(movieData.vote_average.toFixed(1)),
+        rate:movieData.rating
       })
     })
     return newRes
