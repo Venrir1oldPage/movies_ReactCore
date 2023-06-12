@@ -8,7 +8,7 @@
 
 :where(.css-dev-only-do-not-override-w8mnev).ant-image, .ant-image-img .ant-image-mask-info {
     width:183px;
-    height:281px
+    height:281px !important
 }
 
 .movie__info {
