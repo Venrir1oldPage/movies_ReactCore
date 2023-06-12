@@ -7,7 +7,6 @@ import CardList from '../CardList/CardList'
 
 import './Results.css'
 
-
 export default class Results extends Component{
   state={
     moviesData:[],
@@ -29,6 +28,7 @@ export default class Results extends Component{
         notFound:false,
         totalPages:totalPages,
         currentPage:page,
+        error:false
       })
     })
       .catch((e) => {
@@ -63,6 +63,12 @@ export default class Results extends Component{
     }
   }
 
+  componentDidCatch(){
+    this.setState({
+      error:true
+    })
+  }
+
   render(){
     const {moviesData, loading,  error, notFound, totalPages} = this.state
     const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />
@@ -74,12 +80,11 @@ export default class Results extends Component{
       )
     } else if (notFound) return <Alert className='movies__alert' showIcon message='Не можем найти фильм с похожим названием. Попробуйте другой вариант' type="error" />
     else if(error) return <Alert className='movies__alert' showIcon message='Что-то пошло не так' type="error" />
-  
     return (
       <Fragment>
         <CardList key='cardlist' moviesData={moviesData}/>
         <Pagination defaultCurrent={1} showSizeChanger={false} 
-          total={totalPages} onChange={this.changingPage} className='movies_pagination' />
+          total={totalPages*10} onChange={this.changingPage} className='movies_pagination' />
       </Fragment>
     )
   }
@@ -91,5 +96,6 @@ Results.defaultProps = {
   
 Results.propTypes = {
   input: PropTypes.string,
+  updateMovies: PropTypes.func.isRequired,
+  getTotalPages:PropTypes.func.isRequired,
 }
-  

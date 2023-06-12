@@ -30,7 +30,6 @@ export default class App extends Component {
   componentDidMount(){
     this.getGenres()
     this.MovieService.updateGuestSession()
-    // this.MovieService.getGuestSession()   
   }
 
   getGenres = () => {
@@ -43,15 +42,9 @@ export default class App extends Component {
       })
       .catch(() => {
         this.setState({
-          error:true,
-          loading:false,
+          genres:false,
         })
       })
-  }
-
-  compareGenres = (id) => {
-    let el = this.state.genres.find((el)=>el.id===id)
-    return el.name
   }
 
   componentDidCatch(){
@@ -61,13 +54,12 @@ export default class App extends Component {
   }
 
   render() {
-    const {inputValue, error }=this.state
+    const {inputValue, error, genres}=this.state
     
     const results = inputValue? (<MovieServiceConsumer key='consumer'>
       {([{updateMovies, getTotalPages, rateMovie}, genres]) => {return(
         <GenresProvider value={[genres,rateMovie]}>
-          <Results key='results' input={inputValue} updateMovies={updateMovies} 
-            getTotalPages={getTotalPages}/>
+          <Results key='results' input={inputValue} updateMovies={updateMovies} getTotalPages={getTotalPages}/>
         </GenresProvider>
       )}}          
     </MovieServiceConsumer>):<Alert key='alert' type='info' showIcon message='напечатайте что-нибудь'/>
@@ -96,10 +88,10 @@ export default class App extends Component {
       },
     ]
 
-    if(error) return <Alert className='movies__alert' showIcon message='Что-то пошло совсем не так' type="error" />
+    if(error) return <Alert className='movies__alert' showIcon message='Что-то пошло совсем не так. Стоит проверить впн' type="error" />
 
     return (
-      <MovieServiceProvider value={[this.MovieService, this.state.genres]}>
+      <MovieServiceProvider value={[this.MovieService, genres]}>
         <div className="page">
           <Offline>
             <Alert className='movies__alert' showIcon message='Кажется, у вас нет интернета. Проверьте сетевое соединение' type="error" />

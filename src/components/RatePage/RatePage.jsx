@@ -1,7 +1,7 @@
 import { Component, Fragment} from 'react'
 import { Spin, Alert, Pagination} from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
-//import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 
 import CardList from '../CardList/CardList'
 
@@ -42,6 +42,11 @@ export default class RatePage extends Component{
       })
   }
 
+  componentDidCatch(){
+    this.setState({
+      error:true
+    })
+  }
 
   componentDidMount() {
     this.getData()
@@ -64,7 +69,7 @@ export default class RatePage extends Component{
         </div>
       )
     } else if (notFound) return <Alert className='movies__alert' showIcon message='Вы еще не оценили не один фильм' type="error" />
-    else if(error) return <Alert className='movies__alert' showIcon message='Что-то пошло не так' type="error" />
+    else if(error) return <Alert className='movies__alert' showIcon message='Не можем найти ваши оцененные фильмы, загляните позже' type="error" />
     return (
       <Fragment>
         <CardList key='cardlist' moviesData={moviesData}></CardList>
@@ -76,6 +81,7 @@ export default class RatePage extends Component{
 }
 
 
-// RatePage.propTypes = {
-
-// }
+RatePage.propTypes = {
+  getRated: PropTypes.func.isRequired,
+  getTotalRatePages:PropTypes.func.isRequired,
+}
