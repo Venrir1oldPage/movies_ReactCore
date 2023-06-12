@@ -2,7 +2,6 @@ import { Tag } from 'antd'
 import { v4 as uuidv4 } from 'uuid'
 
 const TagsList = ({tagsInfo, genres}) => {
- 
   const compareGenres = (id) => {
     let el = genres.find((el)=>el.id===id)
     return el.name

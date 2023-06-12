@@ -29,7 +29,8 @@ export default class App extends Component {
 
   componentDidMount(){
     this.getGenres()
-    this.MovieService.updateGuestSession()    
+    this.MovieService.updateGuestSession()
+    // this.MovieService.getGuestSession()   
   }
 
   getGenres = () => {
@@ -61,7 +62,7 @@ export default class App extends Component {
 
   render() {
     const {inputValue, error }=this.state
-
+    
     const results = inputValue? (<MovieServiceConsumer key='consumer'>
       {([{updateMovies, getTotalPages, rateMovie}, genres]) => {return(
         <GenresProvider value={[genres,rateMovie]}>
@@ -72,9 +73,9 @@ export default class App extends Component {
     </MovieServiceConsumer>):<Alert key='alert' type='info' showIcon message='напечатайте что-нибудь'/>
 
     const rated = (<MovieServiceConsumer key='consumer'>
-      {([{getRated}, genres]) => {return(
-        <GenresProvider value={genres}>
-          <RatePage MovieService={MovieService} key='rated' getRated={getRated}/>
+      {([{getRated, rateMovie, getTotalRatePages}, genres], ) => {return(
+        <GenresProvider value={[genres,rateMovie]}>
+          <RatePage MovieService={MovieService} key='rated' getRated={getRated} getTotalRatePages={getTotalRatePages}/>
         </GenresProvider> )}}          
     </MovieServiceConsumer>)
 

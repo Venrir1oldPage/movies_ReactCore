@@ -5,65 +5,51 @@ import PropTypes from 'prop-types'
 export default class MovieService extends Component {
 
   totalPages
-  session = localStorage.getItem('MoviesSessionID')
-  apiKey='fc470937d78b9e5ede55f94a466d4386'
-  
-  headers = {
-    Authorization:'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmYzQ3MDkzN2Q3OGI5ZTVlZGU1NWY5NGE0NjZkNDM4NiIsInN1YiI6IjY0NmNmMWMzZDE4NTcyMDEyMDgyYTkzMCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.xIl2-nH-7rUTeWts7JDvaaWtueiu4D0bTLOYAD_lLVA',
-    accept:'application/json'
-  }
+  totalRatePages
+  //session = localStorage.getItem('MoviesSessionID')
+  apiKey='a4a7b57541bec4d7d07a9582d811124b'
 
   baseUrl='https://api.themoviedb.org/3/'
-  
+
   getTotalPages(){
     return this.totalPages
   }
 
-  // async getRated(page) {
-  //   const res = await fetch(
-  //     `${this.baseUrl}/3/guest_session/${this.session}/rated/movies?api_key=${this.apiKey}&page=${page}`
-  //   )
-  //   if (!res.ok) {
-  //     throw new Error(`Something is going wrong, received ${res.status}`)
-  //   }
-  //   const data = await res.json()
-  //   console.log(data)
-  //   return data
-  // }
+  getTotalRatePages = () => {
+    return this.totalRatePages
+  }
 
   rateMovie = (id,value) => {
-    
-    JSON.stringify(value)
-    console.log(id,value)
+    let session=localStorage.getItem('MoviesSessionID')
     const options = {
       method: 'POST',
-      headers: { ...this.headers,
+      headers: { 
         'Content-Type': 'application/json;charset=utf-8',
+        accept:'application/json',
       },
       body: JSON.stringify({value:value})
     }
-    let u = `${this.baseUrl}movie/${id}/rating?api_key=${this.apiKey}&&guest_session_id=${this.session}`
-    console.log(u)
-    fetch(u, options)
+    let link = `${this.baseUrl}movie/${id}/rating?api_key=${this.apiKey}&guest_session_id=${session}`
+    fetch(link, options)
       .then(response => response.json())
-      .then(response => console.log(response))
       .catch(err => console.error(err))
   }
 
   getRated = async () => {
-    let u = `${this.baseUrl}guest_session/${this.session}/rated/movies?api_key=${this.apiKey}&page=1`
-    console.log(u)
-    let res = await fetch(u,{headers: this.headers})
+    let session=localStorage.getItem('MoviesSessionID')
+    let link = `${this.baseUrl}guest_session/${session}/rated/movies?api_key=${this.apiKey}&language=en-US&page=1&sort_by=created_at.asc`
+    let res = await fetch(link)
       .then(response => response.json())
       .then(response => {
-        console.log(response)
+        this.totalRatePages=response.total_pages
         return response})
       .catch(err => console.error(err))
-    console.log(res)
+    let newRes = this.transformData(res.results)
+    return newRes
   }
 
-  getGuestSession () {
-    const res = fetch(`${this.baseUrl}authentication/guest_session/new`,{headers: this.headers})
+  getGuestSession = async () =>{
+    let res = await fetch(`${this.baseUrl}authentication/guest_session/new?api_key=${this.apiKey}`)
       .then(response => response.json())
       .then(response => response)
       .catch(err => console.error(err))
@@ -87,15 +73,15 @@ export default class MovieService extends Component {
   }
 
   getGenres = async () => {
-    const url=`${this.baseUrl}genre/movie/list?language=en`
-    const res = await fetch(url, {headers: this.headers})
+    const url=`${this.baseUrl}genre/movie/list?api_key=${this.apiKey}&language=en`
+    const res = await fetch(url)
     if (!res.ok) throw new Error('Ошибка получения жанров')
     let result =  await res.json()
     return result
   }
 
   getMovies = async (url) => {
-    const res = await fetch(url, {headers: this.headers})
+    const res = await fetch(url)
     if (res.status === 404) throw new Error('Не найдено')
     if (!res.ok) throw new Error(`что-то не так с запросом: ${url}, ответ: ${res.status}`)
     let result =  await res.json()
@@ -104,7 +90,7 @@ export default class MovieService extends Component {
   }
   
   updateMovies = async (input, page ) => {
-    const url= `${this.baseUrl}search/movie?query=${input}&include_adult=false&language=en-US&page=${page}`
+    const url= `${this.baseUrl}search/movie?api_key=${this.apiKey}&query=${input}&include_adult=false&language=en-US&page=${page}`
     let res = await this.getMovies(url)
       .then((data)=> {
         this.totalPages=data.total_pages
