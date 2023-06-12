@@ -11,6 +11,11 @@
     height:281px !important
 }
 
+:where(.css-dev-only-do-not-override-w8mnev).ant-image .ant-image-img {
+    width:183px;
+    height:281px !important
+}
+
 .movie__info {
 display: flex;
 flex-direction: column;
