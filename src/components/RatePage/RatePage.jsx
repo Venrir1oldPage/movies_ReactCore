@@ -38,6 +38,10 @@ export default class RatePage extends Component{
     this.getData()
   }
 
+  componentDidUpdate() {
+    console.log('update page')
+  }
+
 
   render(){
     const {moviesData, loading,  error} = this.state

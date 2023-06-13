@@ -25,13 +25,8 @@ export default class Card extends Component {
     })
     let newArr
     let arr = JSON.parse(localStorage.getItem('ratedFilms'))
-    let currentItem = arr.find((el) => el.id===this.state.id)
-    if(currentItem) {
-      let freshedArr = arr.filter((el) => el.id===this.state.id)
-      newArr = [...freshedArr, {...this.state, rate:value}]
-    } else {
-      newArr = [...arr, {...this.state, rate:value}]
-    }
+    let freshedArr = arr.filter((el) => el.id!==this.state.id)
+    newArr = [...freshedArr, {...this.state, rate:value}]
   
     localStorage.setItem('ratedFilms', JSON.stringify(newArr))
   }

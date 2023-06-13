@@ -15,31 +15,17 @@ export default class MovieService extends Component {
     return this.totalPages
   }
 
-  getGuestSession = async () =>{
-    let res = await fetch(`${this.baseUrl}authentication/guest_session/new?api_key=${this.apiKey}`)
-      .then(response => response.json())
-      .then(response => response)
-      .catch(err => console.error(err))
-    return res
+  updateLocalStorage() {
+    let date = localStorage.getItem('removeDate')
+    let newDate = new Date()
+    if (!date || newDate > new Date(date)) {
+      newDate.setDate(newDate.getDate()+1)
+      localStorage.clear()
+      localStorage.setItem('ratedFilms',JSON.stringify([]))
+      localStorage.setItem('removeDate', JSON.stringify(newDate) )
+    } else return
   }
 
-  updateGuestSession() {
-    let arr = JSON.stringify([])
-    let oldDate = new Date(localStorage.getItem('MoviesSessionEndDate'))
-    if (!oldDate) localStorage.setItem('ratedFilms', arr)
-    let now = new Date()
-    if(!oldDate || now > oldDate) {
-      localStorage.clear()
-    
-      this.getGuestSession().then((res)=> {
-        let removeData= new Date(res.expires_at)
-        removeData.setDate(removeData.getDate()+1)
-        localStorage.setItem('MoviesSessionID', res.guest_session_id)
-        localStorage.setItem('MoviesSessionEndDate', removeData)
-        localStorage.setItem('ratedFilms', arr)
-      })
-    }
-  }
 
   getGenres = async () => {
     const url=`${this.baseUrl}genre/movie/list?api_key=${this.apiKey}&language=en`

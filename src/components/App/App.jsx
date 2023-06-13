@@ -29,7 +29,7 @@ export default class App extends Component {
 
   componentDidMount(){
     this.getGenres()
-    this.MovieService.updateGuestSession()
+    this.MovieService.updateLocalStorage()
   }
 
   getGenres = () => {
@@ -93,7 +93,7 @@ export default class App extends Component {
           <Offline>
             <Alert className='movies__alert' showIcon message='Кажется, у вас нет интернета. Проверьте сетевое соединение' type="error" />
           </Offline>
-          <Tabs className='tabs' defaultActiveKey="1" items={items} centered />
+          <Tabs className='tabs' defaultActiveKey="1" items={items} centered destroyInactiveTabPane />
         </div>
       </MovieServiceProvider>
     )
