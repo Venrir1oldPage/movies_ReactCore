@@ -50,7 +50,7 @@ margin-bottom: 7px;
 }
 
 :where(.css-dev-only-do-not-override-w8mnev).ant-rate .ant-rate-star:not(:last-child) {
-    margin-inline-end: 3px;
+    margin-inline-end: 2px !important;
 }
 
 .movies__rate{
