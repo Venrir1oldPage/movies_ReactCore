@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 
 const TagsList = ({tagsInfo, genres}) => {
   if(!genres) {return (<Tag>Нет доступа к жанрам</Tag>)}
+
   const compareGenres = (id) => {
     let el = genres.find((el)=>el.id===id)
     return el.name

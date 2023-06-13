@@ -57,19 +57,16 @@ export default class App extends Component {
     const {inputValue, error, genres}=this.state
     
     const results = inputValue? (<MovieServiceConsumer key='consumer'>
-      {([{updateMovies, getTotalPages, rateMovie}, genres]) => {return(
-        <GenresProvider value={[genres,rateMovie]}>
+      {([{updateMovies, getTotalPages}, genres]) => {return(
+        <GenresProvider value={genres}>
           <Results key='results' input={inputValue} updateMovies={updateMovies} getTotalPages={getTotalPages}/>
         </GenresProvider>
       )}}          
     </MovieServiceConsumer>):<Alert key='alert' type='info' showIcon message='напечатайте что-нибудь'/>
 
-    const rated = (<MovieServiceConsumer key='consumer'>
-      {([{getRated, rateMovie, getTotalRatePages}, genres], ) => {return(
-        <GenresProvider value={[genres,rateMovie]}>
-          <RatePage MovieService={MovieService} key='rated' getRated={getRated} getTotalRatePages={getTotalRatePages}/>
-        </GenresProvider> )}}          
-    </MovieServiceConsumer>)
+    const rated = (<GenresProvider value={genres} key='provider'>
+      <RatePage  key='rated'/>       
+    </GenresProvider>)
 
 
     const items = [

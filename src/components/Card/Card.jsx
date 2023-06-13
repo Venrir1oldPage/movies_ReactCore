@@ -7,10 +7,10 @@ import TagsList from '../TagsList/TagsList'
 
 export default class Card extends Component {
 
-  cutText(text){
+  cutText(text,num){
     let newText
     const arr = text.split(' ')
-    newText = arr.length > 25?arr.slice(0,25).join(' ')+'...': text
+    newText = arr.length > num?arr.slice(0,num).join(' ')+'...': text
     return newText
   }
 
@@ -20,10 +20,18 @@ export default class Card extends Component {
     }
   }
   rating = (value) => {
-    this.props.rateMovie(this.state.id, value)
     this.setState({
       rate:value
     })
+    let newArr
+    let arr = JSON.parse(localStorage.getItem('ratedFilms'))
+    let currentItem = arr.find((el) => el.id===this.state.id)
+    if(currentItem) {
+      arr = arr.filter((el) => el.id===this.state.id)
+    } 
+    newArr = [...arr, {...this.state, rate:value}]
+  
+    localStorage.setItem('ratedFilms', JSON.stringify(newArr))
   }
 
   constructor(props) {
@@ -39,11 +47,13 @@ export default class Card extends Component {
   }
 
   render () {
-    const {title, date, tags, overview, posterPath, vote, id, rate, error} = this.state
+    let {title, date, tags, overview, posterPath, vote, id, rate, error} = this.state
     const {genres} = this.props
     let color=vote<3? '#E90000': vote <5?'#E97E00': vote<7?'#E9D100':'#66E900'
     let titleSize = title.split(' ').length>3?16:20
     let lineHeight = titleSize+8+'px'
+    let newTitle= this.cutText(title, 8)
+    let newOverview = this.cutText(overview,15)
 
     if(error){return(<div className='card'>Нет данных</div>)}
       
@@ -54,12 +64,12 @@ export default class Card extends Component {
           alt = 'Movie poster'
         />
         <div className='movie__info'>
-          <h2 className='movie__tite' style={ {fontSize: titleSize, lineHeight: lineHeight}} >{title}</h2>
+          <h2 className='movie__tite' style={ {fontSize: titleSize, lineHeight: lineHeight}} >{newTitle}</h2>
           <Progress className='movies__rate' percent={vote*10}  size={33} type="circle" trailColor='#D9D9D9' format={() => `${vote}`} strokeColor={color}/>
           <p className='movie__date'>{date}</p>
           <TagsList className='movie_tags' tagsInfo={tags} genres={genres}/>  
-          <p className='movie__description'>{overview}</p>
-          <Rate className='movie__stars' allowHalf onChange={this.rating} value={rate} />
+          <p className='movie__description'>{newOverview}</p>
+          <Rate className='movie__stars' count={10} allowHalf onChange={this.rating} value={rate} />
         </div>
       </div>
     )
@@ -86,6 +96,5 @@ Card.propTypes = {
   rate:PropTypes.number,
   id: PropTypes.number,
   genres:PropTypes.array,
-  rateMovie: PropTypes.func.isRequired
 }
   

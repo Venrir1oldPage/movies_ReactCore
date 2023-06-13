@@ -9,9 +9,9 @@ const CardList =({moviesData})=>{
   const cards = moviesData.map((item) => { 
     return (
       <GenresConsumer key={item.id}>
-        {( [genres, rateMovie] ) => {
+        {( genres ) => {
           return(
-            <Card key={item.id} movieInfo = {item} genres={genres} rateMovie={rateMovie}/>
+            <Card key={item.id} movieInfo = {item} genres={genres}/>
           )}}
       </GenresConsumer>)
   })

@@ -1,7 +1,6 @@
 import { Component, Fragment} from 'react'
 import { Spin, Alert, Pagination} from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
-import PropTypes from 'prop-types'
 
 import CardList from '../CardList/CardList'
 
@@ -10,36 +9,21 @@ export default class RatePage extends Component{
     moviesData:[],
     loading:true,
     error:false,
-    notFound:false,
-    totalPages:1,
-    currentPage:1
   }
 
 
   getData = () => {
-    if(!this.state.moviesData) return
-    this.props.getRated().then((info)=> {
-      let pages = this.props.getTotalRatePages()
-      this.setState({
-        moviesData:info,
-        loading:false,
-        notFound:false,
-        totalPages:pages
-      })
+    let data = JSON.parse(localStorage.getItem('ratedFilms'))
+    console.log(data)
+    this.setState({
+      moviesData:data,
+      loading:false,
     })
-      .catch((e) => {
-        if(e.message=='Не найдено') {
-          this.setState({
-            loading:false,
-            notFound:true
-          })
-        } else {
-          this.setState({
-            error:true,
-            loading:false,
-          })
-        }
+    if(!data.length){
+      this.setState({
+        error:true,
       })
+    }
   }
 
   componentDidCatch(){
@@ -60,7 +44,7 @@ export default class RatePage extends Component{
 
 
   render(){
-    const {moviesData, loading,  error, notFound, totalPages } = this.state
+    const {moviesData, loading,  error} = this.state
     const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />
     if (loading) {
       return (
@@ -68,20 +52,13 @@ export default class RatePage extends Component{
           <Spin indicator={antIcon}/>
         </div>
       )
-    } else if (notFound) return <Alert className='movies__alert' showIcon message='Вы еще не оценили не один фильм' type="error" />
-    else if(error) return <Alert className='movies__alert' showIcon message='Не можем найти ваши оцененные фильмы, загляните позже' type="error" />
+    } else if(error) return <Alert className='movies__alert' showIcon message='Не можем найти ваши оцененные фильмы, загляните позже' type="error" />
     return (
       <Fragment>
         <CardList key='cardlist' moviesData={moviesData}></CardList>
-        <Pagination defaultCurrent={1} showSizeChanger={false} 
-          total={totalPages*10} onChange={this.changingPage} className='movies_pagination' />
+        <Pagination defaultCurrent={1} showSizeChanger={false} hideOnSinglePage
+          onChange={this.changingPage} className='movies_pagination' />
       </Fragment>
     )
   }
-}
-
-
-RatePage.propTypes = {
-  getRated: PropTypes.func.isRequired,
-  getTotalRatePages:PropTypes.func.isRequired,
 }

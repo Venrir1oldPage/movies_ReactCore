@@ -83,7 +83,7 @@ export default class Results extends Component{
     return (
       <Fragment>
         <CardList key='cardlist' moviesData={moviesData}/>
-        <Pagination defaultCurrent={1} showSizeChanger={false} 
+        <Pagination defaultCurrent={1} showSizeChanger={false} hideOnSinglePage
           total={totalPages*10} onChange={this.changingPage} className='movies_pagination' />
       </Fragment>
     )
