@@ -26,6 +26,7 @@ export default class MovieService extends Component {
   updateGuestSession() {
     let arr = JSON.stringify([])
     let oldDate = new Date(localStorage.getItem('MoviesSessionEndDate'))
+    if (!oldDate) localStorage.setItem('ratedFilms', arr)
     let now = new Date()
     if(!oldDate || now > oldDate) {
       localStorage.clear()
