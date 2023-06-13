@@ -71,7 +71,7 @@ export default class Card extends Component {
           <p className='movie__date'>{date}</p>
           <TagsList className='movie_tags' tagsInfo={tags} genres={genres}/>  
           <p className='movie__description'>{newOverview}</p>
-          <Rate className='movie__stars' count={10} allowHalf marginXS={2} onChange={this.rating} value={rate} />
+          <Rate className='movie__stars' count={10} allowHalf style={{marginXS:4, fontSize:16, lineHeight:1.4}} onChange={this.rating} value={rate} />
         </div>
       </div>
     )

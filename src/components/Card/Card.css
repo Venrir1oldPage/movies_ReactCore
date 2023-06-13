@@ -46,11 +46,6 @@ margin-bottom: 7px;
     margin-bottom:10px;
     display: flex;
     width: 230px;
-    height: 45px;
-}
-
-:where(.css-dev-only-do-not-override-w8mnev).ant-rate .ant-rate-star:not(:last-child) {
-    margin-inline-end: 2px !important;
 }
 
 .movies__rate{
