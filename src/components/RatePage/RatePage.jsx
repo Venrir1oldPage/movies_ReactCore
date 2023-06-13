@@ -15,6 +15,8 @@ export default class RatePage extends Component{
   getData = () => {
     let data = JSON.parse(localStorage.getItem('ratedFilms'))
     console.log(data)
+    let arr = JSON.stringify([])
+    if (!data) {localStorage.setItem('ratedFilms', arr) }
     this.setState({
       moviesData:data,
       loading:false,
