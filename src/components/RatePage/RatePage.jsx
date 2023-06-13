@@ -1,5 +1,5 @@
-import { Component, Fragment} from 'react'
-import { Spin, Alert, Pagination} from 'antd'
+import { Component} from 'react'
+import { Spin, Alert} from 'antd'
 import { LoadingOutlined } from '@ant-design/icons'
 
 import CardList from '../CardList/CardList'
@@ -36,12 +36,6 @@ export default class RatePage extends Component{
     this.getData()
   }
 
-  changingPage = (page) => {
-    this.setState({
-      currentPage:page,
-    })
-  }
-
 
   render(){
     const {moviesData, loading,  error} = this.state
@@ -54,11 +48,7 @@ export default class RatePage extends Component{
       )
     } else if(error) return <Alert className='movies__alert' showIcon message='Не можем найти ваши оцененные фильмы, загляните позже' type="error" />
     return (
-      <Fragment>
-        <CardList key='cardlist' moviesData={moviesData}></CardList>
-        <Pagination defaultCurrent={1} showSizeChanger={false} hideOnSinglePage
-          onChange={this.changingPage} className='movies_pagination' />
-      </Fragment>
+      <CardList key='cardlist' moviesData={moviesData}></CardList>
     )
   }
 }
